@@ -55,8 +55,8 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--with-file-aio \
 		--with-http_v2_module \
 		--with-ld-opt='-Wl,-rpath,/usr/local/lib' \
-		--add-module=/usr/src/ngx_devel_kit-$NGX_DEVEL_KIT_VERSION \
-		--add-module=/usr/src/lua-nginx-module-$LUA_NGINX_MODULE_VERSION \
+		--add-module=/usr/src/ngx_devel_kit-${NGX_DEVEL_KIT_VERSION} \
+		--add-module=/usr/src/lua-nginx-module-${LUA_NGINX_MODULE_VERSION} \
 	" \
 	&& addgroup -S nginx \
 	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
@@ -75,9 +75,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		geoip-dev \
 	&& curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
 	&& curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
-	&& curl -fSL https://github.com/openresty/luajit2/archive/v$LUAJIT2_VERSION.tar.gz -o luajit2.tar.gz \
-	&& curl -fSL https://github.com/simplresty/ngx_devel_kit/archive/v$NGX_DEVEL_KIT_VERSION.tar.gz -o ngx_devel_kit.tar.gz \
-	&& curl -fSL https://github.com/openresty/lua-nginx-module/archive/v$LUA_NGINX_MODULE_VERSION.tar.gz -o lua-nginx-module.tar.gz \
+	&& curl -fSL https://github.com/openresty/luajit2/archive/v${LUAJIT2_VERSION}.tar.gz -o luajit2.tar.gz \
+	&& curl -fSL https://github.com/simplresty/ngx_devel_kit/archive/v${NGX_DEVEL_KIT_VERSION}.tar.gz -o ngx_devel_kit.tar.gz \
+	&& curl -fSL https://github.com/openresty/lua-nginx-module/archive/v${LUA_NGINX_MODULE_VERSION}.tar.gz -o lua-nginx-module.tar.gz \
 	&& export GNUPGHOME="$(mktemp -d)" \
 	&& found=''; \
 	for server in \
@@ -98,7 +98,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& tar -zxC /usr/src -f ngx_devel_kit.tar.gz \
 	&& tar -zxC /usr/src -f lua-nginx-module.tar.gz \
 	&& rm nginx.tar.gz luajit2.tar.gz ngx_devel_kit.tar.gz lua-nginx-module.tar.gz \
-	&& cd /usr/src/luajit2-$LUAJIT2_VERSION \
+	&& cd /usr/src/luajit2-${LUAJIT2_VERSION} \
 	&& make \
 	&& make install \
 	&& cd /usr/src/nginx-$NGINX_VERSION \
@@ -125,7 +125,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& ln -s ../../usr/lib/nginx/modules /etc/nginx/modules \
 	&& strip /usr/sbin/nginx* \
 	&& strip /usr/lib/nginx/modules/*.so \
-	&& rm -rf /usr/src/nginx-$NGINX_VERSION /usr/src/luajit2-$LUAJIT2_VERSION /usr/src/ngx_devel_kit-$NGX_DEVEL_KIT_VERSION /usr/src/lua-nginx-module-$LUA_NGINX_MODULE_VERSION \
+	&& rm -rf /usr/src/nginx-$NGINX_VERSION /usr/src/luajit2-${LUAJIT2_VERSION} /usr/src/ngx_devel_kit-${NGX_DEVEL_KIT_VERSION} /usr/src/lua-nginx-module-${LUA_NGINX_MODULE_VERSION} \
 	\
 	# Bring in gettext so we can get `envsubst`, then throw
 	# the rest away. To do this, we need to install `gettext`
